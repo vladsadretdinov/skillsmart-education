@@ -74,6 +74,7 @@ class LinkedList:
 
         # итерироваться пока не конец списка
         while itr is not None:
+            deleted = False
             if itr.value == val:
                 # если это первый элемент то сместить голову
                 if itr is self.head:
@@ -89,9 +90,14 @@ class LinkedList:
                 if all is False:
                     return None
 
+                deleted = True
+
             # перейти к след элементу
-            prev = itr
+            if deleted is False:
+                prev = itr
+
             itr = itr.next
+
         return None
 
     def clean(self):
@@ -196,7 +202,7 @@ class TestUM(unittest.TestCase):
         self.list_with_7_elements = LinkedList()
         self.node_1 = Node(1)
         self.node_2 = Node(2)
-        self.node_3 = Node(3)
+        self.node_3 = Node(1)
         self.node_4 = Node(1)
         self.node_5 = Node(4)
         self.node_6 = Node(5)
@@ -251,7 +257,7 @@ class TestUM(unittest.TestCase):
         self.assertEqual([], self.list_with_one_element.find_all(2))
 
     def test_find_all_list_with_7_elements(self):
-        self.assertEqual([self.node_1, self.node_4, self.node_7],
+        self.assertEqual([self.node_1, self.node_3, self.node_4, self.node_7],
                          self.list_with_7_elements.find_all(1))
         self.assertEqual([self.node_2], self.list_with_7_elements.find_all(2))
     ### FIND_ALL ###
@@ -348,17 +354,26 @@ class TestUM(unittest.TestCase):
             self.list_with_7_elements.len()
         )
 
-        # удалить существующий в списке элемент встречающийся три раза в списке
+        # удалить существующий в списке элемент встречающийся четыре раза в списке
         len_before = self.list_with_7_elements.len()
         self.list_with_7_elements.delete(1, True)
         self.assertEqual(
-            len_before - 3,
+            len_before - 4,
             self.list_with_7_elements.len()
         )
         self.assertEqual(
             self.node_6,
             self.list_with_7_elements.tail
         )
+        self.assertEqual(
+            None,
+            self.list_with_7_elements.tail.next
+        )
+        self.assertEqual(
+            None,
+            self.list_with_7_elements.find(1)
+        )
+
     ### DELETE FLAG ALL = FALSE ###
 
     ### INSERT FLAG AFTERNODE - None ###

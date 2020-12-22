@@ -71,6 +71,7 @@ class LinkedList:
 
         # итерироваться пока не конец списка
         while itr is not None:
+            deleted = False
             if itr.value == val:
                 # если это первый элемент то сместить голову
                 if itr is self.head:
@@ -86,9 +87,14 @@ class LinkedList:
                 if all is False:
                     return None
 
+                deleted = True
+
             # перейти к след элементу
-            prev = itr
+            if deleted is False:
+                prev = itr
+
             itr = itr.next
+
         return None
 
     def clean(self):
