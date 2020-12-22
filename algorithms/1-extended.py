@@ -82,6 +82,8 @@ class LinkedList:
                     if itr is self.tail:
                         self.tail = None
                 else:
+                    if itr is self.tail:
+                        self.tail = prev
                     prev.next = itr.next
 
                 if all is False:
@@ -341,17 +343,21 @@ class TestUM(unittest.TestCase):
         # удалить существующий в списке элемент встречающийся один раз в списке
         len_before = self.list_with_7_elements.len()
         self.list_with_7_elements.delete(4, True)
-        self.assertNotEqual(
-            len_before,
-            self.list_with_7_elements.len() - 1
+        self.assertEqual(
+            len_before - 1,
+            self.list_with_7_elements.len()
         )
 
         # удалить существующий в списке элемент встречающийся три раза в списке
         len_before = self.list_with_7_elements.len()
         self.list_with_7_elements.delete(1, True)
-        self.assertNotEqual(
-            len_before,
-            self.list_with_7_elements.len() - 3
+        self.assertEqual(
+            len_before - 3,
+            self.list_with_7_elements.len()
+        )
+        self.assertEqual(
+            self.node_6,
+            self.list_with_7_elements.tail
         )
     ### DELETE FLAG ALL = FALSE ###
 

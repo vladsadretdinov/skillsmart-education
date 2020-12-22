@@ -79,6 +79,8 @@ class LinkedList:
                     if itr is self.tail:
                         self.tail = None
                 else:
+                    if itr is self.tail:
+                        self.tail = prev
                     prev.next = itr.next
 
                 if all is False:
