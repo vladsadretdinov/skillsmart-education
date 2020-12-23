@@ -218,18 +218,12 @@ class LinkedList2Dummy(LinkedList2):
                 itr.next.prev = itr.prev
                 itr.prev.next = itr.next
 
-                self.head = dummy_head.next
-                self.tail = dummy_tail.prev
-
                 if all is False:
-                    if self.head.next is None:
-                        self.head = None
-                        self.tail = None
-                    else:
-                        self.head.prev = None
-                        self.tail.next = None
-                    return None
+                    break
             itr = itr.next
+
+        self.head = dummy_head.next
+        self.tail = dummy_tail.prev
 
         if self.head.next is None:
             self.head = None
@@ -247,13 +241,13 @@ class TestUM(unittest.TestCase):
     '''
 
     def setUp(self):
-        self.empty_list = LinkedList2()
+        self.empty_list = LinkedList2Dummy()
 
-        self.list_with_one_element = LinkedList2()
+        self.list_with_one_element = LinkedList2Dummy()
         self.alone_node = Node(13)
         self.list_with_one_element.add_in_tail(self.alone_node)
 
-        self.list_with_7_elements = LinkedList2()
+        self.list_with_7_elements = LinkedList2Dummy()
         self.node_1 = Node(1)
         self.node_2 = Node(2)
         self.node_3 = Node(1)
