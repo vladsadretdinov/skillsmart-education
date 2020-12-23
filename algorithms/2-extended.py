@@ -184,14 +184,61 @@ class LinkedList2:
             tmp.prev = newNode
         return None
 
-# * 2.10. Существует интересный финт, обсуждаемый на курсе Стэнфордского университета CS106B -- фиктивный/пустой (dummy) узел.
-# Пока нам при любых модификациях списка (добавление/удаление узла) приходится рассматривать три отдельные ситуации:
-# работа с серединой списка, с его головой и с его хвостом.
-# Фиктивный узел позволяет избавиться от этих краевых ситуаций, оставив только по одной универсальной операции на добавление и удаление.
-# Идея в том, что мы добавляем в список два искусственных узла -- голову и хвост, которые пользователю класса не видны
-# (они отличаются от видимых узлов, например, булевым флажком, а лучше всего это делать через наследование и перегрузку).
-# Теперь, добавляя или удаляя узлы, мы всегда будем уверены, что у каждого из них имеется и предыдущий узел, и последующий,
-# и от дополнительных проверок и модификаций полей head и tail можно избавиться.
+
+class LinkedList2Dummy(LinkedList2):
+    # * 2.10. Существует интересный финт, обсуждаемый на курсе Стэнфордского университета CS106B -- фиктивный/пустой (dummy) узел.
+    # Пока нам при любых модификациях списка (добавление/удаление узла) приходится рассматривать три отдельные ситуации:
+    # работа с серединой списка, с его головой и с его хвостом.
+    # Фиктивный узел позволяет избавиться от этих краевых ситуаций, оставив только по одной универсальной операции на добавление и удаление.
+    # Идея в том, что мы добавляем в список два искусственных узла -- голову и хвост, которые пользователю класса не видны
+    # (они отличаются от видимых узлов, например, булевым флажком, а лучше всего это делать через наследование и перегрузку).
+    # Теперь, добавляя или удаляя узлы, мы всегда будем уверены, что у каждого из них имеется и предыдущий узел, и последующий,
+    # и от дополнительных проверок и модификаций полей head и tail можно избавиться.
+
+    def __init__(self):
+        super(LinkedList2Dummy, self).__init__()
+
+    def delete(self, val, all=False):
+        # если список пустой то сразу выйти
+        if self.head is None:
+            return None
+
+        dummy_head = Node(None)
+        dummy_head.next = self.head
+        self.head.prev = dummy_head
+
+        dummy_tail = Node(None)
+        dummy_tail.prev = self.tail
+        self.tail.next = dummy_tail
+
+        itr = dummy_head
+        while itr:
+            if itr.value == val:
+
+                itr.next.prev = itr.prev
+                itr.prev.next = itr.next
+
+                self.head = dummy_head.next
+                self.tail = dummy_tail.prev
+
+                if all is False:
+                    if self.head.next is None:
+                        self.head = None
+                        self.tail = None
+                    else:
+                        self.head.prev = None
+                        self.tail.next = None
+                    return None
+            itr = itr.next
+
+        if self.head.next is None:
+            self.head = None
+            self.tail = None
+        else:
+            self.head.prev = None
+            self.tail.next = None
+
+        return None
 
 
 class TestUM(unittest.TestCase):
@@ -374,7 +421,7 @@ class TestUM(unittest.TestCase):
             self.node_6,
             self.list_with_7_elements.head.next
         )
-    ### DELETE FLAG ALL = FALSE ###
+    ### DELETE FLAG ALL = TRUE ###
 
     ### INSERT ###
     def test_insert_empty_list(self):
