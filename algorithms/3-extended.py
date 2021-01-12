@@ -211,7 +211,7 @@ class TestUM(unittest.TestCase):
         self.assertEqual(777, self.da_full[14])
         self.assertRaises(IndexError, self.da_full.__getitem__, 15)
         self.assertEqual(21, self.da_full.capacity)
-        self.da_full.append(777)
+
 
         self.da_empty.resize(79)
         for i in range(46):
