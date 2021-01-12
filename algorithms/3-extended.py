@@ -70,7 +70,7 @@ class DynArray:
         old_count = self.count - 1
         old_array = self.array
 
-        if self.count >= 16:
+        if self.capacity >= 16:
             k = (self.count - 1) / self.capacity
             if k < 0.5:
                 new_capacity = int(self.capacity / 1.5)
@@ -211,7 +211,21 @@ class TestUM(unittest.TestCase):
         self.assertEqual(777, self.da_full[14])
         self.assertRaises(IndexError, self.da_full.__getitem__, 15)
         self.assertEqual(21, self.da_full.capacity)
+        self.da_full.append(777)
 
+        self.da_empty.resize(79)
+        for i in range(46):
+            self.da_empty.append(i)
+
+        for i in range(40):
+            self.da_empty.delete(len(self.da_empty)-1)
+
+        for i in range(5):
+            self.da_empty.delete(0)
+
+        self.assertEqual(1, len(self.da_empty))
+        self.assertEqual(16, self.da_empty.capacity)
+        self.assertEqual(5, self.da_empty[0])
 
 if __name__ == '__main__':
     unittest.main()

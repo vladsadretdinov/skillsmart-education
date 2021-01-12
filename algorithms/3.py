@@ -69,7 +69,7 @@ class DynArray:
         old_count = self.count - 1
         old_array = self.array
 
-        if self.count >= 16:
+        if self.capacity >= 16:
             k = (self.count - 1) / self.capacity
             if k < 0.5:
                 new_capacity = int(self.capacity / 1.5)
