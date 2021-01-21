@@ -1,5 +1,6 @@
 import unittest
 
+
 class Queue:
     def __init__(self):
         # инициализация хранилища данных
@@ -23,6 +24,7 @@ class Queue:
         if i < 0 or i >= self.size():
             raise IndexError('Index is out of bounds')
         return self.queue[i]
+
 
 class TestUM(unittest.TestCase):
     def setUp(self):
@@ -77,6 +79,7 @@ class TestUM(unittest.TestCase):
 
         self.assertEqual(None, self.queue.dequeue())
         self.assertEqual(0, self.queue.size())
+
 
 if __name__ == '__main__':
     unittest.main()
