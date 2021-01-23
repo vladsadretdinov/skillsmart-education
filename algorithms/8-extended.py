@@ -36,46 +36,51 @@ class OrderedList:
             item.next = None
             self.tail = item
         else:
-            # встать в начало списка
-            itr = self.head
+            if self.__ascending is True:
+                itr = self.tail
+                while itr is not None:
+                    compared = self.compare(value, itr.value)
+                    if compared >= 0:
+                        item.next = itr.next
 
-            # итерироваться пока не конец списка
-            while itr is not None:
-                compared = self.compare(value, itr.value)
-                if self.__ascending is True:
-                    if compared == 1:
-                        if itr.next is not None:
-                            itr.next.prev = item
-                            item.next = itr.next
-                            item.prev = itr
-                            itr.next = item
-                        else:
-                            item.prev = self.tail
-                            self.tail.next = item
+                        if itr is self.tail:
                             self.tail = item
-                        return None
-                    elif compared <= 0:
-                        pass
-                    itr = itr.next
-                else:
-                    if compared == 1:
-                        if itr.prev is not None:
-                            itr.prev.next = item
-                            item.prev = itr.prev
-                            item.next = itr
-                            itr.prev = item
                         else:
-                            self.head = item
-                            self.head.next = itr
-                            itr.prev = item
-                        return None
-                    elif compared <= 0:
-                        pass
-                    itr = itr.next
+                            itr.next.prev = item
 
-            item.prev = self.tail
-            self.tail.next = item
-            self.tail = item
+                        item.prev = itr
+                        itr.next = item
+
+                        return None
+                    else:
+                        itr = itr.prev
+
+                self.head.prev = item
+                item.next = self.head
+                self.head = item
+
+            else:
+                itr = self.head
+                while itr is not None:
+                    compared = self.compare(value, itr.value)
+                    if compared >= 0:
+                        item.prev = itr.prev
+
+                        if itr is self.head:
+                            self.head = item
+                        else:
+                            itr.prev.next = item
+
+                        item.next = itr
+                        itr.prev = item
+
+                        return None
+                    else:
+                        itr = itr.next
+
+                self.tail.next = item
+                item.prev = self.tail
+                self.tail = item
 
         return None
 
@@ -203,6 +208,28 @@ class TestUM(unittest.TestCase):
         self.assertEqual(None, self.upward_list.tail.next)
         self.assertEqual(12, self.upward_list.tail.value)
         self.assertEqual(11, self.upward_list.tail.prev.value)
+
+        self.upward_list.add(11)
+        self.assertEqual(4, self.upward_list.len())
+        self.assertEqual(None, self.upward_list.head.prev)
+        self.assertEqual(10, self.upward_list.head.value)
+        self.assertEqual(11, self.upward_list.head.next.value)
+        self.assertEqual(11, self.upward_list.head.next.next.value)
+
+        self.assertEqual(None, self.upward_list.tail.next)
+        self.assertEqual(12, self.upward_list.tail.value)
+        self.assertEqual(11, self.upward_list.tail.prev.value)
+        self.assertEqual(11, self.upward_list.tail.prev.prev.value)
+
+        self.upward_list.add(9)
+        self.upward_list.add(8)
+        self.upward_list.add(11)
+        self.upward_list.add(7)
+        self.upward_list.add(12)
+        self.assertEqual(
+            [7, 8, 9, 10, 11, 11, 11, 12, 12],
+            [x.value for x in self.upward_list.get_all()]
+        )
         ### UPWARD LIST ###
 
         ### DOWNWARD LIST ###
@@ -234,6 +261,28 @@ class TestUM(unittest.TestCase):
         self.assertEqual(None, self.downward_list.tail.next)
         self.assertEqual(10, self.downward_list.tail.value)
         self.assertEqual(11, self.downward_list.tail.prev.value)
+
+        self.downward_list.add(11)
+        self.assertEqual(4, self.downward_list.len())
+        self.assertEqual(None, self.downward_list.head.prev)
+        self.assertEqual(12, self.downward_list.head.value)
+        self.assertEqual(11, self.downward_list.head.next.value)
+        self.assertEqual(11, self.downward_list.head.next.next.value)
+
+        self.assertEqual(None, self.downward_list.tail.next)
+        self.assertEqual(10, self.downward_list.tail.value)
+        self.assertEqual(11, self.downward_list.tail.prev.value)
+        self.assertEqual(11, self.downward_list.tail.prev.prev.value)
+
+        self.downward_list.add(9)
+        self.downward_list.add(8)
+        self.downward_list.add(11)
+        self.downward_list.add(7)
+        self.downward_list.add(12)
+        self.assertEqual(
+            [12, 12, 11, 11, 11, 10, 9, 8, 7],
+            [x.value for x in self.downward_list.get_all()]
+        )
         ### DOWNWARD LIST ###
 
     def test_find(self):
