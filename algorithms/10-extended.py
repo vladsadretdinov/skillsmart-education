@@ -25,25 +25,25 @@ class NativeDictionary:
     def put(self, key, value):
         # гарантированно записываем
         # значение value по ключу key
+
+        if self.is_key(key):
+            index = self.slots.index(key)
+            self.values[index] = value
+            return None
+
         counter = 0
         index = self.hash_fun(value)
 
-        if self.is_key(key):
-            self.slots[index] = key
-            self.values[index] = value
-            return None
         while counter < self.size:
             index = index + 3
             if index >= self.size:
                 index = index - self.size
-            if self.slots[index] == key:
-                self.values[index] = value
-                return None
-            elif self.slots[index] is None:
+            if self.slots[index] is None:
                 self.slots[index] = key
                 self.values[index] = value
                 return None
             counter = counter + 1
+
         return None
 
     def get(self, key):
@@ -113,6 +113,23 @@ class TestUM(unittest.TestCase):
                 "vlad" + str(i),
                 self.native_dict.get("test" + str(i))
             )
+
+        self.native_dict.put("test5", "5vlad")
+        self.assertEqual("5vlad", self.native_dict.get('test5'))
+
+        for i in range(0, 17):
+            self.assertEqual(True, self.native_dict.is_key("test" + str(i)))
+
+        self.native_dict.put("test 5", "5 vlad")
+        self.assertEqual(None, self.native_dict.get('test 5'))
+
+        self.assertEqual(17, len(set(self.native_dict.slots)))
+        self.assertEqual(17, len(set(self.native_dict.values)))
+
+        self.native_dict.put("test5", "vlad6")
+        self.assertEqual("vlad6", self.native_dict.get('test5'))
+        self.assertEqual(17, len(set(self.native_dict.slots)))
+        self.assertEqual(16, len(set(self.native_dict.values)))
 
 
 if __name__ == '__main__':

@@ -22,25 +22,25 @@ class NativeDictionary:
     def put(self, key, value):
         # гарантированно записываем
         # значение value по ключу key
+
+        if self.is_key(key):
+            index = self.slots.index(key)
+            self.values[index] = value
+            return None
+
         counter = 0
         index = self.hash_fun(value)
 
-        if self.is_key(key):
-            self.slots[index] = key
-            self.values[index] = value
-            return None
         while counter < self.size:
             index = index + 3
             if index >= self.size:
                 index = index - self.size
-            if self.slots[index] == key:
-                self.values[index] = value
-                return None
-            elif self.slots[index] is None:
+            if self.slots[index] is None:
                 self.slots[index] = key
                 self.values[index] = value
                 return None
             counter = counter + 1
+
         return None
 
     def get(self, key):
