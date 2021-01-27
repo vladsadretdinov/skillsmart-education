@@ -1,6 +1,9 @@
 class NativeDictionary:
     def __init__(self, sz):
-        self.size = sz
+        if sz < 1:
+            self.size = sz
+        else:
+            self.size = sz
         self.slots = [None] * self.size
         self.values = [None] * self.size
 
@@ -9,8 +12,11 @@ class NativeDictionary:
         # всегда возвращает корректный индекс слота
         if self.is_key(key):
             return self.slots.index(key)
-        index = len(key.encode('utf-8')) % self.size
-        return index
+        try:
+            index = len(key.encode('utf-8')) % self.size
+            return index
+        except ZeroDivisionError:
+            return 0
 
     def is_key(self, key):
         # возвращает True если ключ имеется,

@@ -3,7 +3,10 @@ import unittest
 
 class NativeDictionary:
     def __init__(self, sz):
-        self.size = sz
+        if sz < 1:
+            self.size = sz
+        else:
+            self.size = sz
         self.slots = [None] * self.size
         self.values = [None] * self.size
 
@@ -12,8 +15,11 @@ class NativeDictionary:
         # всегда возвращает корректный индекс слота
         if self.is_key(key):
             return self.slots.index(key)
-        index = len(key.encode('utf-8')) % self.size
-        return index
+        try:
+            index = len(key.encode('utf-8')) % self.size
+            return index
+        except ZeroDivisionError:
+            return 0
 
     def is_key(self, key):
         # возвращает True если ключ имеется,
@@ -156,6 +162,13 @@ class TestUM(unittest.TestCase):
 
         self.native_dict.put("test2", "vlad3")
         self.assertEqual(None, self.native_dict.get('test2'))
+
+    def test_zero_native_dict(self):
+        zero_native_dict = NativeDictionary(0)
+        zero_native_dict.put('test', 'vlad')
+        self.assertEqual(None, zero_native_dict.get('test'))
+        self.assertEqual(0, len(set(zero_native_dict.slots)))
+        self.assertEqual(0, len(set(zero_native_dict.values)))
 
 
 if __name__ == '__main__':
