@@ -13,7 +13,6 @@ class NativeDictionary:
     def hash_fun(self, key):
         # в качестве key поступают строки!
         # всегда возвращает корректный индекс слота
-        key = str(key)
         if self.is_key(key):
             return self.slots.index(key)
         try:
@@ -39,7 +38,7 @@ class NativeDictionary:
             return None
 
         counter = 0
-        index = self.hash_fun(value)
+        index = self.hash_fun(key)
 
         while counter < self.size:
             index = index + 1
@@ -184,7 +183,7 @@ class TestUM(unittest.TestCase):
 
     def test_by_mater(self):
         for i in range(100):
-            self.native_dict.put(i, 123456789)
+            self.native_dict.put(str(i), 123456789)
         pass
 
 
