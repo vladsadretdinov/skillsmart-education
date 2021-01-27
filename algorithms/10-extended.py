@@ -28,7 +28,7 @@ class NativeDictionary:
         counter = 0
         index = self.hash_fun(value)
 
-        if not self.is_key(key) is None:
+        if self.is_key(key):
             self.slots[index] = key
             self.values[index] = value
             return None
@@ -98,6 +98,21 @@ class TestUM(unittest.TestCase):
         self.assertEqual("vlad3", self.native_dict.get('test2'))
 
         self.assertEqual(None, self.native_dict.get('test3'))
+
+        self.native_dict.put("test2", "vlad4")
+        self.assertEqual("vlad4", self.native_dict.get('test2'))
+        self.native_dict.put("test2", "vlad4")
+        self.assertEqual("vlad4", self.native_dict.get('test2'))
+
+    def test_overwrite(self):
+        for i in range(0, 17):
+            self.native_dict.put("test" + str(i), "vlad" + str(i))
+
+        for i in range(0, 17):
+            self.assertEqual(
+                "vlad" + str(i),
+                self.native_dict.get("test" + str(i))
+            )
 
 
 if __name__ == '__main__':

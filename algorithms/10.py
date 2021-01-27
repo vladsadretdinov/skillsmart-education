@@ -25,7 +25,7 @@ class NativeDictionary:
         counter = 0
         index = self.hash_fun(value)
 
-        if not self.is_key(key) is None:
+        if self.is_key(key):
             self.slots[index] = key
             self.values[index] = value
             return None
