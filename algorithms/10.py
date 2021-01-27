@@ -10,6 +10,7 @@ class NativeDictionary:
     def hash_fun(self, key):
         # в качестве key поступают строки!
         # всегда возвращает корректный индекс слота
+        key = str(key)
         if self.is_key(key):
             return self.slots.index(key)
         try:

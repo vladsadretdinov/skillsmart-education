@@ -13,6 +13,7 @@ class NativeDictionary:
     def hash_fun(self, key):
         # в качестве key поступают строки!
         # всегда возвращает корректный индекс слота
+        key = str(key)
         if self.is_key(key):
             return self.slots.index(key)
         try:
@@ -113,6 +114,10 @@ class TestUM(unittest.TestCase):
     def test_overwrite(self):
         for i in range(0, 100):
             self.native_dict.put("test1", "vlad1")
+            self.assertEqual(
+                "vlad1",
+                self.native_dict.get("test1")
+            )
         self.assertEqual(2, len(set(self.native_dict.slots)))
         self.assertEqual(2, len(set(self.native_dict.values)))
 
@@ -169,6 +174,18 @@ class TestUM(unittest.TestCase):
         self.assertEqual(None, zero_native_dict.get('test'))
         self.assertEqual(0, len(set(zero_native_dict.slots)))
         self.assertEqual(0, len(set(zero_native_dict.values)))
+
+    def test_zero_native_dict1(self):
+        zero_native_dict = NativeDictionary(-10)
+        zero_native_dict.put('test', 'vlad')
+        self.assertEqual(None, zero_native_dict.get('test'))
+        self.assertEqual(0, len(set(zero_native_dict.slots)))
+        self.assertEqual(0, len(set(zero_native_dict.values)))
+
+    def test_by_mater(self):
+        for i in range(100):
+            self.native_dict.put(i, 123456789)
+        pass
 
 
 if __name__ == '__main__':
