@@ -35,7 +35,7 @@ class NativeDictionary:
         index = self.hash_fun(value)
 
         while counter < self.size:
-            index = index + 3
+            index = index + 1
             if index >= self.size:
                 index = index - self.size
             if self.slots[index] is None:
@@ -105,6 +105,21 @@ class TestUM(unittest.TestCase):
         self.assertEqual("vlad4", self.native_dict.get('test2'))
 
     def test_overwrite(self):
+        for i in range(0, 100):
+            self.native_dict.put("test1", "vlad1")
+        self.assertEqual(2, len(set(self.native_dict.slots)))
+        self.assertEqual(2, len(set(self.native_dict.values)))
+
+        self.assertEqual(
+            "vlad1",
+            self.native_dict.get("test1")
+        )
+
+        for i in range(0, 17):
+            self.native_dict.put("test1", "vlad2")
+        self.assertEqual(2, len(set(self.native_dict.slots)))
+        self.assertEqual(2, len(set(self.native_dict.values)))
+
         for i in range(0, 17):
             self.native_dict.put("test" + str(i), "vlad" + str(i))
 
@@ -130,6 +145,17 @@ class TestUM(unittest.TestCase):
         self.assertEqual("vlad6", self.native_dict.get('test5'))
         self.assertEqual(17, len(set(self.native_dict.slots)))
         self.assertEqual(16, len(set(self.native_dict.values)))
+
+    def test_small_size(self):
+        self.native_dict = NativeDictionary(1)
+        self.native_dict.put("test1", "vlad1")
+        self.assertEqual('vlad1', self.native_dict.get('test1'))
+
+        self.native_dict.put("test1", "vlad2")
+        self.assertEqual('vlad2', self.native_dict.get('test1'))
+
+        self.native_dict.put("test2", "vlad3")
+        self.assertEqual(None, self.native_dict.get('test2'))
 
 
 if __name__ == '__main__':

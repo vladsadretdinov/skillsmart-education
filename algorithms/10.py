@@ -32,7 +32,7 @@ class NativeDictionary:
         index = self.hash_fun(value)
 
         while counter < self.size:
-            index = index + 3
+            index = index + 1
             if index >= self.size:
                 index = index - self.size
             if self.slots[index] is None:
