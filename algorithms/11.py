@@ -35,6 +35,6 @@ class BloomFilter:
         index1 = self.hash1(str1)
         index2 = self.hash2(str1)
 
-        if index1 & index2:
+        if self.arr[index1] & self.arr[index2]:
             return True
         return False

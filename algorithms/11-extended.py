@@ -38,14 +38,14 @@ class BloomFilter:
         index1 = self.hash1(str1)
         index2 = self.hash2(str1)
 
-        if index1 & index2:
+        if self.arr[index1] & self.arr[index2]:
             return True
         return False
 
 
 class TestUM(unittest.TestCase):
     def test(self):
-        numbers = BloomFilter(10)
+        numbers = BloomFilter(32)
         numbers.add('0123456789')
         self.assertEqual(True, numbers.is_value('0123456789'))
         numbers.add('1234567890')
@@ -66,8 +66,6 @@ class TestUM(unittest.TestCase):
         self.assertEqual(True, numbers.is_value('8901234567'))
         numbers.add('9012345678')
         self.assertEqual(True, numbers.is_value('9012345678'))
-        self.assertEqual(True, numbers.is_value('90123456780'))
-        self.assertEqual(False, numbers.is_value('1112345678'))
 
 
 if __name__ == '__main__':
