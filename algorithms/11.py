@@ -2,7 +2,7 @@ class BloomFilter:
     def __init__(self, f_len):
         # создаём битовый массив длиной f_len ...
         self.filter_len = f_len
-        self.arr = [False] * f_len
+        self.arr = [int("0", 2)] * f_len
 
     def hash1(self, str1):
         # 17
@@ -27,8 +27,8 @@ class BloomFilter:
         index1 = self.hash1(str1)
         index2 = self.hash2(str1)
 
-        self.arr[index1] = True
-        self.arr[index2] = True
+        self.arr[index1] |= int("1", 2)
+        self.arr[index2] |= int("1", 2)
 
     def is_value(self, str1):
         # проверка, имеется ли строка str1 в фильтре
