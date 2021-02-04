@@ -181,7 +181,7 @@ class TestUM(unittest.TestCase):
         self.assertEqual(0, len(set(zero_native_dict.slots)))
         self.assertEqual(0, len(set(zero_native_dict.values)))
 
-    def test_by_mater(self):
+    def test_by_master(self):
         for i in range(100):
             self.native_dict.put(str(i), 123456789)
         pass
