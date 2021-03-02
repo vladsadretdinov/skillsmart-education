@@ -104,19 +104,17 @@ class BST:
         bst_node_change = self.FinMinMax(
             bst_node_delete.Node.RightChild, False)
 
+        if bst_node_delete.Node.NodeKey >= bst_node_delete.Node.Parent.NodeKey:
+            bst_node_delete.Node.Parent.RightChild = bst_node_change
+        else:
+            bst_node_delete.Node.Parent.LeftChild = bst_node_change
+
         if bst_node_change.RightChild is None:
-            if bst_node_delete.Node.NodeKey >= bst_node_delete.Node.Parent.NodeKey:
-                bst_node_delete.Node.Parent.RightChild = bst_node_change
-            else:
-                bst_node_delete.Node.Parent.LeftChild = bst_node_change
             bst_node_change.RightChild = bst_node_delete.Node.RightChild
             bst_node_change.LeftChild = bst_node_delete.Node.LeftChild
         else:
-            if bst_node_delete.Node.NodeKey >= bst_node_delete.Node.Parent.NodeKey:
-                bst_node_delete.Node.Parent.RightChild = bst_node_change
-            else:
-                bst_node_delete.Node.Parent.LeftChild = bst_node_change
             bst_node_change.LeftChild = bst_node_delete.Node.LeftChild
+
         try:
             bst_node_delete.Node.RightChild.Parent = bst_node_change
             bst_node_delete.Node.LeftChild.Parent = bst_node_change
