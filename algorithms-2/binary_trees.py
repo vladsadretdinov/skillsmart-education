@@ -65,6 +65,11 @@ class BST:
     def AddKeyValue(self, key, val):
         # добавляем ключ-значение в дерево
 
+        if self.Root is None:
+            bst_node = BSTNode(key, val, None)
+            self.Root = bst_node
+            return
+
         bst_node = self.FindNodeByKey(key)
 
         if bst_node.NodeHasKey is True:
@@ -139,5 +144,7 @@ class BST:
         return nodes
 
     def Count(self):
+        if self.Root is None:
+            return 0
         # количество узлов в дереве
         return self.recursive_nodes_count()

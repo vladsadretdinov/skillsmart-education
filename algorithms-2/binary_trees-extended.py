@@ -12,6 +12,17 @@ class TestUM(unittest.TestCase):
         self.assertEqual(self.parent_node, self.tree.Root)
         self.assertEqual('key1', self.tree.Root.NodeValue)
 
+        tree2 = BST(None)
+        self.assertEqual(None, tree2.Root)
+        self.assertEqual(0, tree2.Count())
+
+    def test_add_key_value_empty_root(self):
+        tree2 = BST(None)
+        tree2.AddKeyValue(12, 'key12')
+        self.assertEqual(1, tree2.Count())
+        self.assertEqual(None, self.tree.Root.LeftChild)
+        self.assertEqual(None, self.tree.Root.RightChild)
+
     def test_add_key_value(self):
         self.tree.AddKeyValue(12, 'key12')
 
@@ -148,6 +159,9 @@ class TestUM(unittest.TestCase):
         self.tree.AddKeyValue(8, 'key8')
 
         self.assertEqual(8, self.tree.Count())
+
+    def test_delete_root_immediately(self):
+        self.assertEqual(1, self.tree.Count())
 
     def test_delete_right_leaf_false(self):
         self.tree.AddKeyValue(12, 'key12')
