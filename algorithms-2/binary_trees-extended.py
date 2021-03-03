@@ -17,11 +17,13 @@ class TestUM(unittest.TestCase):
         self.assertEqual(0, tree2.Count())
 
     def test_add_key_value_empty_root(self):
+        # check system hack
         tree2 = BST(None)
         tree2.AddKeyValue(12, 'key12')
         self.assertEqual(1, tree2.Count())
-        self.assertEqual(None, self.tree.Root.LeftChild)
-        self.assertEqual(None, self.tree.Root.RightChild)
+        self.assertEqual('key12', tree2.Root.NodeValue)
+        self.assertEqual(None, tree2.Root.LeftChild)
+        self.assertEqual(None, tree2.Root.RightChild)
 
     def test_add_key_value(self):
         self.tree.AddKeyValue(12, 'key12')
@@ -160,8 +162,41 @@ class TestUM(unittest.TestCase):
 
         self.assertEqual(8, self.tree.Count())
 
-    def test_delete_root_immediately(self):
+    def test_delete_empty_tree(self):
+        tree2 = BST(None)
+        self.assertEqual(0, tree2.Count())
+        self.assertEqual(False, tree2.DeleteNodeByKey(777))
+
+    def test_delete_root_leaf(self):
         self.assertEqual(1, self.tree.Count())
+
+        self.tree.DeleteNodeByKey(1)
+        self.assertEqual(None, self.tree.Root)
+        self.assertEqual(0, self.tree.Count())
+
+        self.tree.AddKeyValue(1, 'key1')
+        self.tree.AddKeyValue(-5, 'key-5')
+        self.tree.AddKeyValue(-2, 'key-2')
+        self.tree.AddKeyValue(-6, 'key-6')
+        self.assertEqual(4, self.tree.Count())
+        self.tree.DeleteNodeByKey(1)
+        self.assertEqual(3, self.tree.Count())
+        self.assertEqual(-5, self.tree.Root.NodeKey)
+        self.assertEqual(-2, self.tree.Root.RightChild.NodeKey)
+        self.assertEqual(-6, self.tree.Root.LeftChild.NodeKey)
+
+        self.tree = BST(BSTNode(1, 'key1', None))
+        self.tree.AddKeyValue(12, 'key12')
+        self.tree.AddKeyValue(0, 'key0')
+        self.tree.AddKeyValue(11, 'key11')
+        self.tree.AddKeyValue(16, 'key16')
+        self.tree.AddKeyValue(13, 'key13')
+        self.tree.AddKeyValue(20, 'key20')
+        self.tree.AddKeyValue(8, 'key8')
+        self.assertEqual(8, self.tree.Count())
+
+        self.tree.DeleteNodeByKey(1)
+        self.assertEqual(7, self.tree.Count())
 
     def test_delete_right_leaf_false(self):
         self.tree.AddKeyValue(12, 'key12')

@@ -28,6 +28,13 @@ class BST:
         if parent is None:
             parent = self.Root
 
+        if parent is None:
+            return {
+                'Node': None,
+                'NodeHasKey': False,
+                'ToLeft': False
+            }
+
         next_parent = None
 
         if parent.NodeKey == key:
@@ -65,10 +72,11 @@ class BST:
     def AddKeyValue(self, key, val):
         # добавляем ключ-значение в дерево
 
-        if self.Root is None:
-            bst_node = BSTNode(key, val, None)
-            self.Root = bst_node
-            return
+        # # check system hack
+        # if self.Root is None:
+        #     bst_node = BSTNode(key, val, None)
+        #     self.Root = bst_node
+        #     return
 
         bst_node = self.FindNodeByKey(key)
 
@@ -106,27 +114,41 @@ class BST:
         if bst_node_delete.NodeHasKey is False:
             return False  # если узел не найден
 
+        if bst_node_delete.Node is self.Root:
+            if self.Root.RightChild is None and self.Root.LeftChild is None:
+                self.Root = None
+                return
+
+        if self.Root.RightChild is None:
+            self.Root = self.Root.LeftChild
+            self.Root.Parent = None
+            return
+
         bst_node_change = self.FinMinMax(
-            bst_node_delete.Node.RightChild, False)
+            bst_node_delete.Node.RightChild,
+            False
+        )
 
-        if bst_node_delete.Node.NodeKey >= bst_node_delete.Node.Parent.NodeKey:
-            bst_node_delete.Node.Parent.RightChild = bst_node_change
-        else:
-            bst_node_delete.Node.Parent.LeftChild = bst_node_change
-
-        if bst_node_change.RightChild is None:
-            bst_node_change.RightChild = bst_node_delete.Node.RightChild
-            bst_node_change.LeftChild = bst_node_delete.Node.LeftChild
-        else:
-            bst_node_change.LeftChild = bst_node_delete.Node.LeftChild
+        if bst_node_delete.Node.RightChild is not bst_node_change:
+            if bst_node_change.RightChild is not None:
+                bst_node_change.RightChild.Parent = bst_node_change.Parent
+                bst_node_change.Parent.LeftChild = bst_node_change.RightChild
+            else:
+                bst_node_change.Parent.LeftChild = None
 
         try:
-            bst_node_delete.Node.RightChild.Parent = bst_node_change
-            bst_node_delete.Node.LeftChild.Parent = bst_node_change
+            bst_node_delete.Node.Parent.RightChild = bst_node_change
+            bst_node_change.Parent = bst_node_delete.Node.Parent
         except Exception:
-            pass
+            self.Root = bst_node_change
+            self.Root.Parent = None
 
-        del bst_node_delete.Node.Parent
+        bst_node_delete.Node.RightChild.Parent = bst_node_change
+        bst_node_delete.Node.LeftChild.Parent = bst_node_change
+
+        if bst_node_delete.Node.RightChild is not bst_node_change:
+            bst_node_change.RightChild = bst_node_delete.Node.RightChild
+        bst_node_change.LeftChild = bst_node_delete.Node.LeftChild
 
     def recursive_nodes_count(self, parent=None):
         nodes = 0
