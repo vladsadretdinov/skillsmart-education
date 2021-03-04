@@ -88,6 +88,8 @@ class BST:
         else:
             bst_node.Node.RightChild = BSTNode(key, val, bst_node.Node)
 
+        return True
+
     def recursive_find_max_min(self, max=False, parent=None):
         if parent is None:
             parent = self.Root
@@ -118,12 +120,12 @@ class BST:
         if bst_node_delete.Node.LeftChild is None and bst_node_delete.Node.RightChild is None:
             if bst_node_delete.Node is self.Root:
                 self.Root = None
-                return
+                return True
             if bst_node_delete.Node.NodeKey < bst_node_delete.Node.Parent.NodeKey:
                 bst_node_delete.Node.Parent.LeftChild = None
             else:
                 bst_node_delete.Node.Parent.RightChild = None
-            return
+            return True
 
         # Deleted node has only one cnild
         if bst_node_delete.Node.LeftChild is None or bst_node_delete.Node.RightChild is None:
@@ -135,7 +137,7 @@ class BST:
             if bst_node_delete.Node is self.Root:
                 self.Root = bst_node_to_connect
                 self.Root.Parent = None
-                return
+                return True
 
             if bst_node_delete.Node.NodeKey < bst_node_delete.Node.Parent.NodeKey:
                 bst_node_delete.Node.Parent.LeftChild = bst_node_to_connect
@@ -143,7 +145,7 @@ class BST:
                 bst_node_delete.Node.Parent.RightChild = bst_node_to_connect
 
             bst_node_to_connect.Parent = bst_node_delete.Node.Parent
-            return
+            return True
 
         # Deleted node has both (left and right) nodes
         bst_node_to_change = self.FinMinMax(bst_node_delete.Node.RightChild, False)
@@ -170,7 +172,7 @@ class BST:
             bst_node_delete.Node.RightChild.Parent = bst_node_to_change
 
         bst_node_to_change.Parent = bst_node_delete.Node.Parent
-
+        return True
 
     def recursive_nodes_count(self, parent=None):
         nodes = 0

@@ -210,8 +210,6 @@ class TestUM(unittest.TestCase):
 
         self.tree.DeleteNodeByKey(1)
 
-        print(self.tree.collect_nodes())
-
         self.assertEqual(7, self.tree.Count())
 
     def test_delete_right_leaf_false(self):
@@ -443,6 +441,23 @@ class TestUM(unittest.TestCase):
 
         self.assertEqual(20, self.tree.Root.LeftChild.NodeKey)
         self.assertEqual(70, self.tree.Root.RightChild.NodeKey)
+
+    def test_another_one_deleting(self):
+        self.tree = BST(BSTNode(50, 'key50', None))
+        self.tree.AddKeyValue(20, 'key20')
+        self.tree.AddKeyValue(70, 'key70')
+        self.tree.AddKeyValue(10, 'key10')
+        self.tree.AddKeyValue(40, 'key40')
+        self.tree.AddKeyValue(60, 'key60')
+        self.tree.AddKeyValue(90, 'key90')
+        self.tree.AddKeyValue(30, 'key30')
+        self.tree.AddKeyValue(35, 'key30')
+        self.tree.AddKeyValue(45, 'key45')
+        self.assertEqual(10, self.tree.Count())
+
+        self.tree.DeleteNodeByKey(10)
+
+        self.assertEqual(9, self.tree.Count())
 
 
 if __name__ == '__main__':
