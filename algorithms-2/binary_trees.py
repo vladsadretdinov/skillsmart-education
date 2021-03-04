@@ -114,41 +114,65 @@ class BST:
         if bst_node_delete.NodeHasKey is False:
             return False  # если узел не найден
 
-        if bst_node_delete.Node is self.Root:
-            if self.Root.RightChild is None and self.Root.LeftChild is None:
+        # Deleted node has no children
+        if bst_node_delete.Node.LeftChild is None and bst_node_delete.Node.RightChild is None:
+            if bst_node_delete.Node is self.Root:
                 self.Root = None
                 return
-
-        if self.Root.RightChild is None:
-            self.Root = self.Root.LeftChild
-            self.Root.Parent = None
+            if bst_node_delete.Node.NodeKey < bst_node_delete.Node.Parent.NodeKey:
+                bst_node_delete.Node.Parent.LeftChild = None
+            else:
+                bst_node_delete.Node.Parent.RightChild = None
             return
 
-        bst_node_change = self.FinMinMax(
-            bst_node_delete.Node.RightChild,
-            False
-        )
-
-        if bst_node_delete.Node.RightChild is not bst_node_change:
-            if bst_node_change.RightChild is not None:
-                bst_node_change.RightChild.Parent = bst_node_change.Parent
-                bst_node_change.Parent.LeftChild = bst_node_change.RightChild
+        # Deleted node has only one cnild
+        if bst_node_delete.Node.LeftChild is None or bst_node_delete.Node.RightChild is None:
+            if bst_node_delete.Node.LeftChild is None:
+                bst_node_to_connect = bst_node_delete.Node.RightChild
             else:
-                bst_node_change.Parent.LeftChild = None
+                bst_node_to_connect = bst_node_delete.Node.LeftChild
+
+            if bst_node_delete.Node is self.Root:
+                self.Root = bst_node_to_connect
+                self.Root.Parent = None
+                return
+
+            if bst_node_delete.Node.NodeKey < bst_node_delete.Node.Parent.NodeKey:
+                bst_node_delete.Node.Parent.LeftChild = bst_node_to_connect
+            else:
+                bst_node_delete.Node.Parent.RightChild = bst_node_to_connect
+
+            bst_node_to_connect.Parent = bst_node_delete.Node.Parent
+            return
+
+        # Deleted node has both (left and right) nodes
+        bst_node_to_change = self.FinMinMax(bst_node_delete.Node.RightChild, False)
 
         try:
-            bst_node_delete.Node.Parent.RightChild = bst_node_change
-            bst_node_change.Parent = bst_node_delete.Node.Parent
+            if bst_node_delete.Node.NodeKey < bst_node_delete.Node.Parent.NodeKey:
+                bst_node_delete.Node.Parent.LeftChild = bst_node_to_change
+            else:
+                bst_node_delete.Node.Parent.RightChild = bst_node_to_change
         except Exception:
-            self.Root = bst_node_change
-            self.Root.Parent = None
+            # if we delete root node
+            pass
 
-        bst_node_delete.Node.RightChild.Parent = bst_node_change
-        bst_node_delete.Node.LeftChild.Parent = bst_node_change
+        bst_node_to_change.Parent = bst_node_delete.Node.Parent
+        bst_node_to_change.LeftChild = bst_node_delete.Node.LeftChild
+        bst_node_to_change.LeftChild.Parent = bst_node_to_change
 
-        if bst_node_delete.Node.RightChild is not bst_node_change:
-            bst_node_change.RightChild = bst_node_delete.Node.RightChild
-        bst_node_change.LeftChild = bst_node_delete.Node.LeftChild
+        if bst_node_delete.Node.RightChild is not bst_node_to_change:
+            if bst_node_to_change.RightChild is None:
+                bst_node_delete.Node.RightChild.LeftChild = None
+            else:
+                bst_node_delete.Node.RightChild.LeftChild = bst_node_to_change.RightChild
+
+            bst_node_to_change.RightChild = bst_node_delete.Node.RightChild
+            bst_node_delete.Node.RightChild.Parent = bst_node_to_change
+
+        if bst_node_delete.Node is self.Root:
+            self.Root = bst_node_to_change
+            bst_node_to_change.Parent = None
 
     def recursive_nodes_count(self, parent=None):
         nodes = 0
