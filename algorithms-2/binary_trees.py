@@ -72,11 +72,10 @@ class BST:
     def AddKeyValue(self, key, val):
         # добавляем ключ-значение в дерево
 
-        # # check system hack
-        # if self.Root is None:
-        #     bst_node = BSTNode(key, val, None)
-        #     self.Root = bst_node
-        #     return
+        if self.Root is None:
+            bst_node = BSTNode(key, val, None)
+            self.Root = bst_node
+            return True
 
         bst_node = self.FindNodeByKey(key)
 
