@@ -155,24 +155,22 @@ class BST:
                 bst_node_delete.Node.Parent.RightChild = bst_node_to_change
         except Exception:
             # if we delete root node
-            pass
+            self.Root = bst_node_to_change
 
-        bst_node_to_change.Parent = bst_node_delete.Node.Parent
         bst_node_to_change.LeftChild = bst_node_delete.Node.LeftChild
         bst_node_to_change.LeftChild.Parent = bst_node_to_change
 
         if bst_node_delete.Node.RightChild is not bst_node_to_change:
             if bst_node_to_change.RightChild is None:
-                bst_node_delete.Node.RightChild.LeftChild = None
+                bst_node_to_change.Parent.LeftChild  = None
             else:
-                bst_node_delete.Node.RightChild.LeftChild = bst_node_to_change.RightChild
+                bst_node_to_change.Parent.LeftChild = bst_node_to_change.RightChild
 
             bst_node_to_change.RightChild = bst_node_delete.Node.RightChild
             bst_node_delete.Node.RightChild.Parent = bst_node_to_change
 
-        if bst_node_delete.Node is self.Root:
-            self.Root = bst_node_to_change
-            bst_node_to_change.Parent = None
+        bst_node_to_change.Parent = bst_node_delete.Node.Parent
+
 
     def recursive_nodes_count(self, parent=None):
         nodes = 0
