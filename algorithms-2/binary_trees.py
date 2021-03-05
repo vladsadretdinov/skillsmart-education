@@ -147,7 +147,8 @@ class BST:
             return True
 
         # Deleted node has both (left and right) nodes
-        bst_node_to_change = self.FinMinMax(bst_node_delete.Node.RightChild, False)
+        bst_node_to_change = self.FinMinMax(
+            bst_node_delete.Node.RightChild, False)
 
         try:
             if bst_node_delete.Node.NodeKey < bst_node_delete.Node.Parent.NodeKey:
@@ -163,7 +164,7 @@ class BST:
 
         if bst_node_delete.Node.RightChild is not bst_node_to_change:
             if bst_node_to_change.RightChild is None:
-                bst_node_to_change.Parent.LeftChild  = None
+                bst_node_to_change.Parent.LeftChild = None
             else:
                 bst_node_to_change.Parent.LeftChild = bst_node_to_change.RightChild
 
