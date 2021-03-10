@@ -1,29 +1,61 @@
 import unittest
-
-from binary_trees_search import BSTNode, BST_SEARCH
+from binary_trees import BSTNode
+from binary_trees_search import BST_SEARCH
 
 
 class TestUM(unittest.TestCase):
     def setUp(self):
-        self.parent_node = BSTNode(1, 'key1', None)
+        #          50
+        #         /  \
+        #      35      55
+        #     /  \       \
+        #   30    40      60
+        #        /  \     /
+        #       37  45   57
+
+        self.parent_node = BSTNode(50, 'key50', None)
         self.tree = BST_SEARCH(self.parent_node)
-        self.tree.AddKeyValue(12, 'key12')
-        self.tree.AddKeyValue(0, 'key0')
-        self.tree.AddKeyValue(11, 'key11')
-        self.tree.AddKeyValue(16, 'key16')
-        self.tree.AddKeyValue(13, 'key13')
-        self.tree.AddKeyValue(20, 'key20')
-        self.tree.AddKeyValue(8, 'key8')
+        self.tree.AddKeyValue(35, 'key35')
+        self.tree.AddKeyValue(55, 'key55')
+        self.tree.AddKeyValue(30, 'key30')
+        self.tree.AddKeyValue(40, 'key40')
+        self.tree.AddKeyValue(60, 'key60')
+        self.tree.AddKeyValue(37, 'key37')
+        self.tree.AddKeyValue(45, 'key45')
+        self.tree.AddKeyValue(57, 'key57')
 
     def test_wide_all_nodes(self):
-        self.tree.WideAllNodes()
         self.assertEqual(
-            [1, 0, 12, 11, 16, 8, 13, 20],
+            [50, 35, 55, 30, 40, 60, 37, 45, 57],
             [x.NodeKey for x in self.tree.WideAllNodes()]
         )
 
         self.tree = BST_SEARCH(None)
         self.assertEqual((), self.tree.WideAllNodes())
+
+    def test_deep_all_nodes_preorder(self):
+        self.assertEqual(
+            [50, 35, 30, 40, 37, 45, 55, 60, 57],
+            [x.NodeKey for x in self.tree.DeepAllNodes(2)]
+        )
+        self.tree = BST_SEARCH(None)
+        self.assertEqual((), self.tree.DeepAllNodes(2))
+
+    def test_deep_all_nodes_inorder(self):
+        self.assertEqual(
+            [30, 35, 37, 40, 45, 50, 55, 57, 60],
+            [x.NodeKey for x in self.tree.DeepAllNodes(0)]
+        )
+        self.tree = BST_SEARCH(None)
+        self.assertEqual((), self.tree.DeepAllNodes(0))
+
+    def test_deep_all_nodes_postorder(self):
+        self.assertEqual(
+            [30, 37, 45, 40, 35, 57, 60, 55, 50],
+            [x.NodeKey for x in self.tree.DeepAllNodes(1)]
+        )
+        self.tree = BST_SEARCH(None)
+        self.assertEqual((), self.tree.DeepAllNodes(1))
 
 
 if __name__ == '__main__':

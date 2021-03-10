@@ -149,7 +149,7 @@ class OrderedList:
     def get_all(self):
         r = []
         node = self.head
-        while node != None:
+        while node is not None:
             r.append(node)
             node = node.next
         return r
