@@ -1,6 +1,5 @@
 import unittest
-from binary_trees import BSTNode
-from binary_trees_search import BST_SEARCH
+from binary_trees import BSTNode, BST
 
 
 class TestUM(unittest.TestCase):
@@ -14,7 +13,7 @@ class TestUM(unittest.TestCase):
         #       37  45   57
 
         self.parent_node = BSTNode(50, 'key50', None)
-        self.tree = BST_SEARCH(self.parent_node)
+        self.tree = BST(self.parent_node)
         self.tree.AddKeyValue(35, 'key35')
         self.tree.AddKeyValue(55, 'key55')
         self.tree.AddKeyValue(30, 'key30')
@@ -30,7 +29,7 @@ class TestUM(unittest.TestCase):
             [x.NodeKey for x in self.tree.WideAllNodes()]
         )
 
-        self.tree = BST_SEARCH(None)
+        self.tree = BST(None)
         self.assertEqual((), self.tree.WideAllNodes())
 
     def test_deep_all_nodes_preorder(self):
@@ -38,7 +37,7 @@ class TestUM(unittest.TestCase):
             [50, 35, 30, 40, 37, 45, 55, 60, 57],
             [x.NodeKey for x in self.tree.DeepAllNodes(2)]
         )
-        self.tree = BST_SEARCH(None)
+        self.tree = BST(None)
         self.assertEqual((), self.tree.DeepAllNodes(2))
 
     def test_deep_all_nodes_inorder(self):
@@ -46,7 +45,7 @@ class TestUM(unittest.TestCase):
             [30, 35, 37, 40, 45, 50, 55, 57, 60],
             [x.NodeKey for x in self.tree.DeepAllNodes(0)]
         )
-        self.tree = BST_SEARCH(None)
+        self.tree = BST(None)
         self.assertEqual((), self.tree.DeepAllNodes(0))
 
     def test_deep_all_nodes_postorder(self):
@@ -54,7 +53,7 @@ class TestUM(unittest.TestCase):
             [30, 37, 45, 40, 35, 57, 60, 55, 50],
             [x.NodeKey for x in self.tree.DeepAllNodes(1)]
         )
-        self.tree = BST_SEARCH(None)
+        self.tree = BST(None)
         self.assertEqual((), self.tree.DeepAllNodes(1))
 
 
