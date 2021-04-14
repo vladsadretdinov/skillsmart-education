@@ -15,10 +15,7 @@ class Heap:
 
     def GetMax(self):
         # вернуть значение корня и перестроить кучу
-        if len(self.HeapArray) == 0:
-            # если куча пуста
-            return -1
-        elif self.HeapArray[0] is None:
+        if len(self.HeapArray) == 0 or self.HeapArray[0] is None:
             # если куча пуста
             return -1
 
@@ -29,6 +26,11 @@ class Heap:
         self.free_slot_index = self.free_slot_index - 1
         self.HeapArray[current_root_index] = self.HeapArray[last_existing_index]
         self.HeapArray[last_existing_index] = None
+
+        # если был массив из одного элемента
+        if last_existing_index == current_root_index:
+            return response
+
         max_child_index = current_root_index
 
         while True:

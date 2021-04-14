@@ -70,6 +70,11 @@ class TestUM(unittest.TestCase):
 
     def test_get_max(self):
         self.heap = Heap()
+        self.heap.MakeHeap([777], 0)
+        self.assertEqual(self.heap.GetMax(), 777)
+        self.assertEqual(self.heap.GetMax(), -1)
+
+        self.heap = Heap()
         self.heap.MakeHeap([11, 9, 4, 7, 8, 3, 1, 2, 5, 6], 3)
 
         self.assertEqual(self.heap.GetMax(), 11)
