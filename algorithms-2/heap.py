@@ -6,8 +6,7 @@ class Heap:
     def MakeHeap(self, a, depth):
         # создаём массив кучи HeapArray из заданного
         # размер массива выбираем на основе глубины depth
-        # глубина корня считаю равной единице
-        self.HeapArray = [None] * ((2 ** depth) - 1)
+        self.HeapArray = [None] * (2 ** (depth + 1) - 1)
         for elem in a:
             is_added = self.Add(elem)
             if is_added is False:

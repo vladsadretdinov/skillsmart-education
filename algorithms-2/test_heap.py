@@ -9,29 +9,29 @@ class TestUM(unittest.TestCase):
 
     def test_make_heap_depth(self):
         self.heap = Heap()
-        self.heap.MakeHeap([1], 1)
+        self.heap.MakeHeap([1], 0)
         self.assertEqual(len(self.heap.HeapArray), 1)
 
         self.heap = Heap()
-        self.heap.MakeHeap([1, 2, 3], 2)
+        self.heap.MakeHeap([1, 2, 3], 1)
         self.assertEqual(len(self.heap.HeapArray), 3)
 
         self.heap = Heap()
-        self.heap.MakeHeap([1, 2, 3, 4, 5, 6, 7], 3)
+        self.heap.MakeHeap([1, 2, 3, 4, 5, 6, 7], 2)
         self.assertEqual(len(self.heap.HeapArray), 7)
 
         self.heap = Heap()
-        self.heap.MakeHeap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 4)
+        self.heap.MakeHeap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 3)
         self.assertEqual(len(self.heap.HeapArray), 15)
 
         self.heap = Heap()
-        self.heap.MakeHeap([1, 2, 3, 4, 5], 2)
+        self.heap.MakeHeap([1, 2, 3, 4, 5], 1)
         self.assertEqual(len(self.heap.HeapArray), 3)
         self.assertEqual(self.heap.HeapArray, [3, 1, 2])
 
     def test_add(self):
         self.heap = Heap()
-        self.heap.MakeHeap([11, 9, 4, 7, 8, 3, 1, 2, 5, 6], 4)
+        self.heap.MakeHeap([11, 9, 4, 7, 8, 3, 1, 2, 5, 6], 3)
         self.assertEqual(len(self.heap.HeapArray), 15)
         self.assertEqual(self.heap.Add(10), True)
         self.assertEqual(len(self.heap.HeapArray), 15)
@@ -53,24 +53,24 @@ class TestUM(unittest.TestCase):
         self.assertEqual(self.heap.HeapArray, [15, 10, 14, 7, 9, 11, 13, 2, 5, 6, 8, 3, 4, 1, 12])
 
         self.heap = Heap()
-        self.heap.MakeHeap([11, 9, 4, 7, 8, 3, 1, 2, 5, 6], 2)
+        self.heap.MakeHeap([11, 9, 4, 7, 8, 3, 1, 2, 5, 6], 1)
         self.assertEqual(self.heap.HeapArray, [11, 9, 4])
         self.assertEqual(self.heap.Add(777), False)
 
         self.heap = Heap()
-        self.heap.MakeHeap([11, 9, 4, 7, 8, 3, 1, 2, 5, 6], 1)
+        self.heap.MakeHeap([11, 9, 4, 7, 8, 3, 1, 2, 5, 6], 0)
         self.assertEqual(self.heap.HeapArray, [11])
         self.assertEqual(self.heap.Add(777), False)
 
         self.heap = Heap()
-        self.heap.MakeHeap([], 1)
+        self.heap.MakeHeap([], 0)
         self.assertEqual(self.heap.HeapArray, [None])
         self.assertEqual(self.heap.Add(777), True)
         self.assertEqual(self.heap.HeapArray, [777])
 
     def test_get_max(self):
         self.heap = Heap()
-        self.heap.MakeHeap([11, 9, 4, 7, 8, 3, 1, 2, 5, 6], 4)
+        self.heap.MakeHeap([11, 9, 4, 7, 8, 3, 1, 2, 5, 6], 3)
 
         self.assertEqual(self.heap.GetMax(), 11)
         self.assertEqual(
