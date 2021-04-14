@@ -15,7 +15,10 @@ class Heap:
 
     def GetMax(self):
         # вернуть значение корня и перестроить кучу
-        if self.HeapArray[0] is None:
+        if len(self.HeapArray) == 0:
+            # если куча пуста
+            return -1
+        elif self.HeapArray[0] is None:
             # если куча пуста
             return -1
 
