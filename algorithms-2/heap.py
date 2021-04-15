@@ -7,6 +7,7 @@ class Heap:
         # создаём массив кучи HeapArray из заданного
         # размер массива выбираем на основе глубины depth
         self.HeapArray = [None] * (2 ** (depth + 1) - 1)
+        self.free_slot_index = 0
         for elem in a:
             is_added = self.Add(elem)
             if is_added is False:
@@ -37,6 +38,9 @@ class Heap:
             current_root_index = max_child_index
             left_child_index = current_root_index * 2 + 1
             right_child_index = current_root_index * 2 + 2
+
+            if left_child_index >= len(self.HeapArray):
+                return response
 
             if (
                 self.HeapArray[left_child_index] is not None

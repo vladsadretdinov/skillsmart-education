@@ -75,6 +75,20 @@ class TestUM(unittest.TestCase):
         self.assertEqual(self.heap.GetMax(), -1)
 
         self.heap = Heap()
+        self.heap.MakeHeap([10, 15, 6, 22, 34, 86], 2)
+        for i in range(82):
+            self.assertEqual(self.heap.GetMax() is not None, True)
+            self.assertEqual(len(self.heap.HeapArray), 7)
+            self.assertEqual(self.heap.Add(777), True)
+        self.assertEqual(len(self.heap.HeapArray), 7)
+
+        self.heap = Heap()
+        self.heap.MakeHeap([110, 90, 40, 70, 80, 30, 10, 20, 50, 60, 65, 31, 29, 11, 9], 3)
+        self.assertEqual(self.heap.HeapArray, [110, 90, 40, 70, 80, 31, 11, 20, 50, 60, 65, 30, 29, 10, 9])
+        self.assertEqual(self.heap.GetMax(), 110)
+        self.assertEqual(self.heap.HeapArray, [90, 80, 40, 70, 65, 31, 11, 20, 50, 60, 9, 30, 29, 10, None])
+
+        self.heap = Heap()
         self.heap.MakeHeap([11, 9, 4, 7, 8, 3, 1, 2, 5, 6], 3)
 
         self.assertEqual(self.heap.GetMax(), 11)
