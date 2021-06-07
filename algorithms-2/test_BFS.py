@@ -43,7 +43,7 @@ class TestUM(unittest.TestCase):
         case = self.sg.BreadthFirstSearch(0, 0)
         self.assertEqual(
             [x.Value for x in case],
-            ['A', 'B', 'A'],
+            ['A', 'D', 'A'],
         )
 
         case = self.sg.BreadthFirstSearch(3, 3)
@@ -67,7 +67,7 @@ class TestUM(unittest.TestCase):
         case = self.sg.BreadthFirstSearch(4, 2)
         self.assertEqual(
             [x.Value for x in case],
-            ['E', 'B', 'A', 'C'],
+            ['E', 'D', 'C'],
         )
 
         case = self.sg.BreadthFirstSearch(3, 4)
@@ -189,6 +189,43 @@ class TestUM(unittest.TestCase):
         self.assertEqual(
             [x.Value for x in case],
             ['B', 'B'],
+        )
+
+    def test_BreadthFirstSearch4(self):
+        self.size = 12
+        self.sg = SimpleGraph(self.size)
+        self.sg.AddVertex("A")
+        self.sg.AddVertex("B")
+        self.sg.AddVertex("C")
+        self.sg.AddVertex("D")
+        self.sg.AddVertex("E")
+        self.sg.AddVertex("F")
+        self.sg.AddVertex("G")
+        self.sg.AddVertex("H")
+        self.sg.AddVertex("I")
+        self.sg.AddVertex("J")
+        self.sg.AddVertex("K")
+        self.sg.AddVertex("L")
+
+        self.assertEqual(self.sg.m_adjacency, [[0] * self.size for _ in range(self.size)])
+        self.sg.AddEdge(0, 1)  # A + B
+        self.sg.AddEdge(0, 2)  # A + C
+        self.sg.AddEdge(0, 3)  # A + D
+
+        self.sg.AddEdge(1, 4)  # B + E
+        self.sg.AddEdge(1, 5)  # B + F
+        self.sg.AddEdge(3, 6)  # D + G
+        self.sg.AddEdge(3, 7)  # D + H
+
+        self.sg.AddEdge(4, 8)  # E + I
+        self.sg.AddEdge(4, 9)  # E + J
+        self.sg.AddEdge(6, 10)  # G + K
+        self.sg.AddEdge(6, 11)  # G + L
+
+        case = self.sg.BreadthFirstSearch(0, 10)
+        self.assertEqual(
+            [x.Value for x in case],
+            ['A', 'D', 'G', 'K'],
         )
 
 
