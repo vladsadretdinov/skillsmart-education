@@ -52,8 +52,9 @@ class SimpleGraph:
         # возвращает список узлов вне треугольников
         out_of_triangles = []
         for index in range(len(self.vertex)):
-            possible_neighbours = [(index, is_edge) for index, is_edge in enumerate(self.m_adjacency[index][:index])] + \
-            [(index + 1, is_edge) for index, is_edge in enumerate(self.m_adjacency[index][index+1:])]
+            left = enumerate(self.m_adjacency[index][:index])
+            right = enumerate(self.m_adjacency[index][index+1:])
+            possible_neighbours = [(ind, is_edge) for ind, is_edge in left] + [(ind + index + 1, is_edge) for ind, is_edge in right]
             neighbours = list(filter(lambda v: v[1] == 1, possible_neighbours))
             if len(neighbours) < 2:
                 out_of_triangles.append(self.vertex[index])
