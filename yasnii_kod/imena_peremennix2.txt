@@ -1,0 +1,58 @@
+6.1)  
+value -> searchOption
+// единственный входной аргумент функции поиска
+
+graphEnums -> graphResolutionOptions
+// лист параметров отвечающий за настройку опции размерности деления времени на графике
+
+parameter -> cardConfigParameter
+// итерируемый параметр конфигурации карточки для ui 
+
+value -> deviceState
+// единственный входной аргумент функции отрисовки карточки на основе состояния текущего устройства 
+
+rez -> incrementalResult
+// результат функции инкрементирования
+
+6.2)
+add -> ip_address
+// ip адрес пришедшего устройства
+
+time -> timestamp
+// отсечка времени запроса
+
+vals -> requestArguments
+// входящий аргументы общего хендлера
+
+tesType -> firmwareType
+// тип выбираемой прошивки
+
+6.3) 
+func makeButton:
+    color: 'primary',
+    text: 'SEARCH.BUTTON_SEND',
+    icon: { type: 'material', name: 'loop' },
+    action: 'send',
+
+func getTableSettings:
+    pageIndex: null,
+    pageSize: null,
+    sortDirection: null,
+    sortActive: null
+
+class TimeZoneService
+    func getTime
+    func setTime
+    func changeZone
+    func getLocalTime
+
+6.4)
+cfg -> configuration
+
+exc -> exception
+
+log -> logger
+
+enum -> enumeration
+
+json() -> to_json()
