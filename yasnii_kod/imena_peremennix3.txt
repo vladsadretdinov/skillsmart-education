@@ -1,0 +1,41 @@
+7.1.
+end -> is_process_complete
+
+not_found -> is_prefix_found
+
+bool -> is_bool
+
+equip -> is_equipment
+
+clicked - is_button_clicked
+
+7.2.
+f -> found
+
+process_running -> end
+
+7.3.
+c -> char 
+
+i -> element
+
+i -> index
+
+n -> node
+
+7.4.
+prefix/postfix
+
+started/finished
+
+get/post
+
+
+7.5.
+result -> output_result
+
+count -> chars_count
+
+address -> equipment_ip_address
+
+params -> input_device_params
