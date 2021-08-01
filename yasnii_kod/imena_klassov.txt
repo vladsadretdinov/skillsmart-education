@@ -1,0 +1,25 @@
+1)
+class AccessLogger
+
+class NotificationsHandler
+
+class Application
+
+class ResultExecutor
+
+class Parser
+
+2)
+AccessLogger.get -> AccessLogger.getLogger
+
+NotificationsHandler.get -> NotificationsHandler.getNotification
+
+Application.start -> Application.startServer
+
+Application.post -> Application.stopServer
+
+ResultExecutor.get -> ResultExecutor.getFinishedResult
+
+Parser.post -> Parser.loadHTML
+
+Parser.get -> Parser.getParsedHTML
