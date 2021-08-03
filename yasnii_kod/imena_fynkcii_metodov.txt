@@ -1,0 +1,35 @@
+analyze_spv_response -> write_log_depends_on_spv
+// в зависимости от spv сущности процедура пишет лог с переданными в нее сообщениями
+
+convert_datetime -> convert_datetime_to_seconds_of_day
+// конвертирует дату в секунды, начиная с начала дня переданного значения
+
+get_fw_url -> get_full_firmware_url
+// возвращает ссылку на полную путь склеивая переданное значение и переменные окружения
+
+configure_logging -> configure
+// метод настройки уровня логирования и тд класса Logger
+
+_check_n_fix_gpn -> extract_missing_gpn_paths
+// передается список путей сущности gpn - нужно добавить недостающие пути на основе уже переданных
+
+subscribeToUrl -> subscribeToUrlChanges
+// создает подписку(RXJS) на изменения состояния сущности url 
+
+updateParams -> getNewParameters
+// метод класса CardNetworkMapComponent вызывает асинхронный запрос и обновляет состояние карточки
+
+resetEchart -> resetGraph
+// метод класса CardWifiGraphComponent для сброса настроек графика - название было привязано к технологии не с сущности
+
+exportCSV -> exportGraphAsCSV
+// метод класса для экспорта графика в виде CSV данных
+
+calcHeight -> setEditorHeight
+// устанавливает высоту окна редактирования
+
+isHeightChange -> onEditorSizeChange
+// подписка на изменение размеров окна редактирования
+
+saveParametersToStorage -> saveDataToLocalStorage
+// сохранение данных в браузерный объект Storage - не база данных storage или еще какая-либо сущность
