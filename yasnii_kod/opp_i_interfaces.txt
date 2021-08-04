@@ -1,0 +1,7 @@
+Transport.deliver()
+
+Dialog.createButton()
+
+Button.render()
+
+// выдуманные примеры - так как мало опыта ооп
