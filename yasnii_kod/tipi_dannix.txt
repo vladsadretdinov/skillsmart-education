@@ -1,0 +1,32 @@
+name = name.split(".") -> split_name = name.split(".")
+// убрал переопределение типа - выписав значение в новую переменную
+
+if value.lower() in ["enable", "on", "1", "true", "enabled", "1.0"] -> if is_value_true 
+// вынес сложное условие в вспомогательную переменную 
+
+25 -> DEFAULT_NORMAL_LIMIT
+// лимит в процентах для того чтобы считать что значение находится в пределах нормы
+
+75 -> DEFAULT_WARNING_LIMIT
+// лимит в процентах для того чтобы считать что значение находится выше нормы 
+
+speed = int(size * 8 / duration) -> if duration == 0: duration = 1
+// проверка деления на ноль
+
+speed = int(size * 8 / duration) -> speed = int(size * BITS_TO_BYTES / duration)
+// убрал магическое число конвертации размера битов и байтов
+
+if "methodName" in last_result[0] and last_result[0]["methodName"] == "SPV" -> is_response_spv
+// убрал проверку результата на сущность spv в вспомогательную переменную 
+
+last_result[0]["body"].get("Status") in (0, 1, "0", "1", True, False) -> is_status_boolean_type
+// убрал проверку статуса на его тип в вспомогательную переменную
+
+14 -> WIFI_2_4_MAX_CHANNEL
+// верхняя граница канала сети wifi 2.4ггц
+
+if "2.4" in str(item.get("OperatingFrequencyBand", "")).lower() or 1 <= item["Channel"] <= 13 -> is_ssid_2_4
+// убрал проверку данных является ли item ассоциативен с 2.4 сеткой или нет в вспомогательную переменную
+
+if last_backup and last_backup["LastModified"].replace(tzinfo=None) + datetime.timedelta(seconds=BACKUP_INTERVAL) > datetime.datetime.now() -> is_need_to_make_backup
+// убрал проверку нужно ли делать бэкап в зависимости от условий в вспомогательную переменную
