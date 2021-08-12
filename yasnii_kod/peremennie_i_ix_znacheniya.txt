@@ -1,0 +1,36 @@
+status_code = 200 
+// удалил ненужную переменную
+
+let http = HttpClient() -> const http = HttpClient()
+// объявление неизменяемой переменной
+
+let body = {entity_id,params} -> const body = {entity_id,params}
+// объявление неизменяемой переменной
+
+let cpeIndex = 0
+for (cpeIndex; cpeIndex < entities.length; cpeIndex++) -> for (let cpeIndex = 0; cpeIndex < entities.length; cpeIndex++)
+// внес в цикл определение переменной 
+
+const name = ""
+// удалил ненужную переменную
+
+def __init__(self, username, password):
+    self.username = username
+    self.password = password
+    self.path = None 
+// инициализация переменной внутри конструктора
+
+pat = r"(?<=\.)([^.\[\]]+?|\[.+])(?=\.)"
+......
+......
+path_list = re.findall(pat, pattern['prefix'])
+// сократил расстояние между объявлением переменной и ее использованием
+
+prefix = pattern['prefix'].strip('.')
+// удалил ненужную переменную
+
+let {table, params} = card.body.config -> const {table, params} = card.body.config;
+// объявление неизменяемых переменных
+
+let rangeStart -> let rangeStart = 0
+// инициализация переменной начального непустого значения
