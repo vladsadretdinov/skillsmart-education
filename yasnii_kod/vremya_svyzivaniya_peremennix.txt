@@ -1,0 +1,16 @@
+if step == "DONE_GPV": ->
+    import a from b
+    STEP_DONE_GPV = "DONE_GPV"
+    ...
+    if step == STEP_DONE_GPV
+
+// вынес магическую переменную как константу чтобы при желании можно было изменить значение лишь в одном месте
+
+60 -> os.environ.get('CFG_BACKUP_INTERVAL')
+// вынес магическую переменную как переменную окружения чтобы не пересобирая приложение менять нужное значение
+
+with open(os.path.join(os.path.dirname(__file__), 'config.yml'), 'r') as configfile ->
+    CONFIG_FILE_NAME = "config.yml"
+    ....
+    with open(os.path.join(os.path.dirname(__file__), CONFIG_FILE_NAME), 'r') as configfile
+// вынес значение имени файла как отдельную переменную чтобы легко изменить ее в следующих ревизиях
