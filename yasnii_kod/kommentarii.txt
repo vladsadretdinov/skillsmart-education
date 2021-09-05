@@ -1,0 +1,19 @@
+Стараюсь писать код в следующем стиле
+
+def is_bootstrap_process_needed(cpe_obj: Dict) -> bool:
+    """
+    Check do we need to make initial instructions or not
+
+    @param cpe_obj: data about cpe from db as key-value dict
+    @return bool
+    """
+    events = str(cpe_obj.get("events", ""))
+
+    if "BOOTSTRAP" in events or "New CPE" in events:
+        return True
+
+    return False
+
+ 1 - повышать качество кода вынося в отдельные переменные и методы логические куски кода 
+ 2 - комментировать(если это метод) его функционал и входные-выходные аргументы
+ 
