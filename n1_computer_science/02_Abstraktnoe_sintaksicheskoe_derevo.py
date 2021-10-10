@@ -56,7 +56,7 @@ def __right_side_add_brackets(right_side: str):
     return right_side
 
 
-def add_brackets(expression: str, sign: str, left_indent: int = 1):
+def __add_brackets(expression: str, sign: str, left_indent: int = 1):
     split_expression = expression.split(sign)
 
     if len(split_expression) == 1:
@@ -72,7 +72,7 @@ def add_brackets(expression: str, sign: str, left_indent: int = 1):
     left_side = __left_side_add_brackets(left_side)
     right_side = __right_side_add_brackets(right_side)
 
-    return add_brackets(f"{left_side}{sign}{right_side}", sign, left_indent + 1)
+    return __add_brackets(f"{left_side}{sign}{right_side}", sign, left_indent + 1)
 
 
 class ANode:
@@ -89,32 +89,42 @@ class ANode:
             return "число"
 
 
-def main(expression: str):
-    new_expression = expression.replace(" ", "")
-    new_expression = add_brackets(new_expression, "/")
-    new_expression = add_brackets(new_expression, "*")
-    new_expression = add_brackets(new_expression, "-")
-    new_expression = add_brackets(new_expression, "+")
-
-    list_of_tokens = []
+def __make_token_list(expression: str):
+    token_list = []
     possible_number = ""
-    for char in new_expression:
-        if char in range(0, 9):
+    for char in expression:
+        if char in ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"):
             possible_number = possible_number + char
         elif possible_number != "":
-            list_of_tokens.append(ANode(int(possible_number)))
+            token_list.append(ANode(int(possible_number)))
+            token_list.append(ANode(char))
             possible_number = ""
         else:
-            list_of_tokens.append(ANode(char))
+            token_list.append(ANode(char))
 
-    return list_of_tokens
+    if possible_number != "":
+        token_list.append(ANode(int(possible_number)))
+
+    return token_list
 
 
-if __name__ == "__main__":
-    print(main("1-1+1+1"))
-    print(main("((7+3)*(5-2))"))
-    print(main("7+3*5-2"))
-    print(main("10+5-16+1"))
-    print(main("3+5-5+3"))
-    print(main("7+3/25*(5-2)"))
-    print(main("(5-2)"))
+def main(expression: str):
+    new_expression = expression.replace(" ", "")
+    new_expression = __add_brackets(new_expression, "/")
+    new_expression = __add_brackets(new_expression, "*")
+    new_expression = __add_brackets(new_expression, "-")
+    new_expression = __add_brackets(new_expression, "+")
+
+    token_list = __make_token_list(new_expression)
+
+    return token_list
+
+
+# if __name__ == "__main__":
+#     print([x.token_value for x in main("1-1+1+1")])
+#     print([x.token_value for x in main("((7+3)*(5-2))")])
+#     print([x.token_value for x in main("7+3*5-2")])
+#     print([x.token_value for x in main("10+5-16+1")])
+#     print([x.token_value for x in main("3+5-5+3")])
+#     print([x.token_value for x in main("7+3/25*(5-2)")])
+#     print([x.token_value for x in main("(5-2)")])
